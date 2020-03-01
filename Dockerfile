@@ -6,7 +6,8 @@ WORKDIR /app
 COPY package.json ./
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y gitRUN npm install
+    apt-get install -y git
+RUN npm install
 COPY . .
 RUN VUE_APP_BASE_URL=${base_url} VUE_APP_GETH_URL=${geth_url} npm run build
 
