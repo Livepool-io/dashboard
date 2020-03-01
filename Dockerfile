@@ -3,8 +3,10 @@ FROM node:lts-alpine as build-stage
 ARG base_url
 ARG geth_url
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+COPY package.json ./
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y gitRUN npm install
 COPY . .
 RUN VUE_APP_BASE_URL=${base_url} VUE_APP_GETH_URL=${geth_url} npm run build
 
