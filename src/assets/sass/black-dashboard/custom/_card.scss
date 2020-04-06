@@ -230,3 +230,16 @@
     }
   }
 }
+
+.bg-c-primary {
+  background: linear-gradient(to right, $vue-states, $vue);
+}
+
+.bg-c-secondary {
+  background: linear-gradient(to right, $vue, $tertiary);
+}
+
+.bg-c-tertiary {
+  background: linear-gradient(to right, $tertiary, $vue-states);
+}
+

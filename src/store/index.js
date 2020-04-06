@@ -1,6 +1,6 @@
 import Vuex from "vuex";
 import Vue from "vue";
-import getNodeStatus from "@/scripts/transcoders"
+import {getNodeStatus, getTranscoders} from "@/scripts/transcoderPool"
 
 Vue.use(Vuex);
 
@@ -16,8 +16,11 @@ export default new Vuex.Store({
         },
         status: {
             lpVersion: "",
-            transcoders: []
-        }
+            commission: "",
+            basePrice: "",
+            totalPayouts: ""
+        },
+        transcoders: []
     },
     actions: {
         storeWeb3({commit}, web3Obj) {
@@ -26,8 +29,11 @@ export default new Vuex.Store({
         storeAddress({commit}, address) {
             commit("storeAddress", address)
         },
-        storeStatus({commit}) {
-           getNodeStatus(commit)
+        async storeStatus({commit}) {
+            commit("storeStatus", await getNodeStatus())
+        },
+        async storeTranscoders({commit}) {
+            commit("storeTranscoders", await getTranscoders())
         }
     },
     mutations: {
@@ -39,6 +45,9 @@ export default new Vuex.Store({
         },
         storeStatus(state, status) {
             state.status = {...status}
+        },
+        storeTranscoders(state, transcoders) {
+            state.transcoders = transcoders
         }
     },
 })

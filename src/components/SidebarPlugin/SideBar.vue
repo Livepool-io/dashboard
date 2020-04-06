@@ -8,7 +8,7 @@
     <!-- -->
     <div class="sidebar-wrapper" id="style-3">
       <div class="logo">
-        <a href="http://www.creative-tim.com"
+        <a href="#"
            aria-label="sidebar mini logo"
            class="simple-text logo-mini">
           <div class="logo-img"
@@ -18,7 +18,7 @@
               alt="">
           </div>
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="#" class="simple-text logo-normal">
           {{title}}
         </a>
       </div>
@@ -36,7 +36,7 @@
                         :icon="link.icon">
           </sidebar-link>
         </slot>
-        <web3-connect />
+        <!-- <web3-connect /> -->
       </ul>
     </div>
   </div>

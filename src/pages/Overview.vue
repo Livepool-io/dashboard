@@ -1,4 +1,6 @@
 <template>
+<div>
+  <PoolStats />
     <div class="row">
       <div class="col-12">
         <card :title="table1.title">
@@ -10,19 +12,26 @@
           </div>
         </card>
       </div>
+      <!-- LIVERPOOL
       <div class="col-12">
         <img class="center-img" src="@/assets/img/livepool.png" />
        </div>
+       END LIVERPOOL -->
     </div>
+</div>
 </template>
 <script>
 import { BaseTable } from "@/components";
-const tableColumns = ["Address", "Capacity", "Load", "Balance", "Payouts"];
+import PoolStats from "./overview/PoolStats"
+import getNodeStatus from "@/scripts/transcoderPool"
 
-import getNodeStatus from "@/scripts/transcoders"
+const tableColumns = ["Address", "Capacity", "Pending", "Payout"];
+
+
 export default {
   components: {
-    BaseTable
+    BaseTable,
+    PoolStats
   },
   data() {
     return {
@@ -37,15 +46,16 @@ export default {
           return {
               title: this.tableheader.title,
               columns: this.tableheader.columns,
-              tableData: this.$store.state.status.transcoders
+              tableData: this.$store.state.transcoders
           }
       }
   },
   created () {
     this.$store.dispatch("storeStatus")
+    this.$store.dispatch("storeTranscoders")
        setInterval(() => {
-                this.$store.dispatch("storeStatus")
-            }, 5000)
+                this.$store.dispatch("storeTranscoders")
+            }, 2000)
   }
 };
 </script>
