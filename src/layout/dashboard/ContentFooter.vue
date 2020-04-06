@@ -17,5 +17,9 @@
     }
   };
 </script>
-<style>
-</style>
+<style scoped>
+a {
+  color: #00CECE !important;
+}
+</style>>
+
