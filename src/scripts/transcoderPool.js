@@ -12,13 +12,20 @@ export async function getTranscoders() {
 }
 
 function formatTranscoders(stats) {
-    let mapped = stats.map(s => ({
-        address: s.EthereumAddress,
-        capacity: s.Capacity,
-        pending: web3.utils.fromWei(s.Pending.toString(), 'ether').substring(0,8) + " Ξ",
-        payout: web3.utils.fromWei(s.Payout.toString(), 'ether').substring(0,6) + " Ξ"
-    }))
-    return mapped.sort((a, b) => a.address.localeCompare(b.address))
+    let transcoders = []
+    for (let transcoder in stats) {
+        transcoders.push({
+            address: transcoder,
+            pending: web3.utils.fromWei(stats[transcoder].Pending.toString(), 'ether').substring(0,8) + " Ξ",
+            payout: web3.utils.fromWei(stats[transcoder].Payout.toString(), 'ether').substring(0,6) + " Ξ",
+            capacity: stats[transcoder].Nodes.reduce((total, cap) => {
+                total.Capacity += cap.Capacity
+                return total
+            }).Capacity,
+            nodes: stats[transcoder].Nodes.map(t => t.Address)
+        })
+    }
+    return transcoders
 }
 
 async function poolEarnings() {
