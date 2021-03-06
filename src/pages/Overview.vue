@@ -55,7 +55,7 @@ export default {
     this.$store.dispatch("storeTranscoders")
        setInterval(() => {
                 this.$store.dispatch("storeTranscoders")
-            }, 2000)
+            }, 30000)
   }
 };
 </script>
