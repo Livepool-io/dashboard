@@ -35,7 +35,6 @@ function formatTranscoders(stats) {
             region: stats[transcoder].Region
         })
     }
-    console.log(transcoders)
     return transcoders
 }
 
