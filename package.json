@@ -13,9 +13,6 @@
     "lint-fix": "vue-cli-service lint --fix"
   },
   "dependencies": {
-    "3box": "^1.17.1",
-    "@portis/web3": "^2.0.0-beta.54",
-    "@toruslabs/torus-embed": "^1.1.1",
     "chart.js": "^2.7.3",
     "graphql-request": "^1.8.2",
     "register-service-worker": "^1.5.2",
@@ -26,8 +23,7 @@
     "vue-router-prefetch": "^1.4.0",
     "vue2-transitions": "^0.2.3",
     "vuex": "^3.1.2",
-    "web3": "^1.2.6",
-    "web3connect": "^1.0.0-beta.32"
+    "web3": "^1.2.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",
