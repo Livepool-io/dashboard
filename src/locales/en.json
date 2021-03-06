@@ -119,8 +119,5 @@
     "notifications": "Notifications",
     "userProfile": "User Profile",
     "typography": "Typography",
-    "rtlSupport": "RTL Support",
-    "web3Connect": "Log In",
-    "web3Disconnect": "Log Out"
-  }
+    "rtlSupport": "RTL Support"  }
 }

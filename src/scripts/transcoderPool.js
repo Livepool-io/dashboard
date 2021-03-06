@@ -12,7 +12,10 @@ export async function getTranscoders() {
     regions = [].concat.apply([], regions)
     let transcoders = []
     regions.forEach(r => {
-        for (let t in r ) { transcoders.push(r[t])}
+        for (let t in r ) { 
+            r[t]["EthAddress"] = t
+            transcoders.push(r[t])
+        }
     })
     
         return formatTranscoders(
@@ -21,10 +24,11 @@ export async function getTranscoders() {
 }
 
 function formatTranscoders(stats) {
+    console.log(stats)
     let transcoders = []
     for (let transcoder in stats) {
         transcoders.push({
-            address: transcoder,
+            address: stats[transcoder].EthAddress,
             pending: web3.utils.fromWei(stats[transcoder].Pending.toString(), 'ether').substring(0,8) + " Ξ",
             payout: web3.utils.fromWei(stats[transcoder].Payout.toString(), 'ether').substring(0,8) + " Ξ",
             capacity: stats[transcoder].Nodes.reduce((total, cap) => {

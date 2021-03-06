@@ -43,7 +43,6 @@
 </template>
 <script>
   import SidebarLink from "./SidebarLink";
-  import Web3Connect from './Web3Connect'
   export default {
     props: {
       title: {
@@ -85,9 +84,7 @@
       };
     },
     components: {
-      SidebarLink,
-      Web3Connect
-    },
+      SidebarLink    },
     computed: {
       connected() { return this.$store.state.web3Obj.connected},
       /**

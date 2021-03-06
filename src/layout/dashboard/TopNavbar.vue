@@ -146,7 +146,6 @@ const INITIAL_STATE = {
     if (web3 && web3.currentProvider && web3.currentProvider.close) {
       await web3.currentProvider.close()
     }
-    await this.$web3Connect.clearCachedProvider()
     this.$store.dispatch("storeWeb3", {...INITIAL_STATE})
    if (this.$route.name != "overview")  this.$router.push('overview');
   }

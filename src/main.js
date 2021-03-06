@@ -21,9 +21,7 @@ import router from "./router/index";
 import BlackDashboard from "./plugins/blackDashboard";
 import i18n from "./i18n"
 
-import web3Connect from "./plugins/web3Connect"
 import web3 from "./plugins/web3"
-import Box from "./plugins/3box"
 
 import './registerServiceWorker'
 
@@ -33,9 +31,7 @@ Vue.use(BlackDashboard);
 Vue.use(VueRouter);
 Vue.use(RouterPrefetch);
 
-Vue.prototype.$web3Connect = web3Connect
 Vue.prototype.$web3 = web3
-Vue.prototype.$3box = Box
 
 /* eslint-disable no-new */
 new Vue({
