@@ -25,7 +25,7 @@ import { BaseTable } from "@/components";
 import PoolStats from "./overview/PoolStats"
 import getNodeStatus from "@/scripts/transcoderPool"
 
-const tableColumns = ["Address", "Capacity", "Pending", "Payout"];
+const tableColumns = ["Address", "Region", "Capacity", "Pending", "Payout"];
 
 
 export default {
