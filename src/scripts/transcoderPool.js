@@ -24,7 +24,6 @@ export async function getTranscoders() {
 }
 
 function formatTranscoders(stats) {
-    console.log(stats)
     let transcoders = []
     for (let transcoder in stats) {
         transcoders.push({

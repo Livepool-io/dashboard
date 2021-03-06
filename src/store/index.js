@@ -33,7 +33,6 @@ export default new Vuex.Store({
             commit("storeStatus", await getNodeStatus())
         },
         async storeTranscoders({commit}) {
-            console.log(await getTranscoders())
             commit("storeTranscoders", await getTranscoders())
         }
     },
