@@ -7,20 +7,24 @@ let web3 = new Web3(process.env.VUE_APP_GETH_URL)
 
 export async function getTranscoders() {
     let urls = JSON.parse(process.env.VUE_APP_LIVEPOOL_API)
-    let regions = await Promise.all(urls.map(url => axios.get(`${url}/transcoders`)))
+    let regions
+
+    for (url in urls) {
+        regions.push(await axios.get(`${url}/transcoders`))
+    }
     regions = regions.map(r => r.data)
     regions = [].concat.apply([], regions)
     let transcoders = []
     regions.forEach(r => {
-        for (let t in r ) { 
+        for (let t in r) {
             r[t]["EthAddress"] = t
             transcoders.push(r[t])
         }
     })
-    
-        return formatTranscoders(
-            transcoders
-        )
+
+    return formatTranscoders(
+        transcoders
+    )
 }
 
 function formatTranscoders(stats) {
@@ -28,8 +32,8 @@ function formatTranscoders(stats) {
     for (let transcoder in stats) {
         transcoders.push({
             address: stats[transcoder].EthAddress,
-            pending: web3.utils.fromWei(stats[transcoder].Pending.toString(), 'ether').substring(0,8) + " Ξ",
-            payout: web3.utils.fromWei(stats[transcoder].Payout.toString(), 'ether').substring(0,8) + " Ξ",
+            pending: web3.utils.fromWei(stats[transcoder].Pending.toString(), 'ether').substring(0, 8) + " Ξ",
+            payout: web3.utils.fromWei(stats[transcoder].Payout.toString(), 'ether').substring(0, 8) + " Ξ",
             capacity: stats[transcoder].Nodes.reduce((total, cap) => {
                 total.Capacity += cap.Capacity
                 return total
@@ -51,11 +55,11 @@ async function poolEarnings() {
         }`
 
     let data = await request(process.env.VUE_APP_LIVEPEER_SUBGRAPH, query)
-        let earnings = data.winningTicketRedeemeds.reduce((a, b) => {
+    let earnings = data.winningTicketRedeemeds.reduce((a, b) => {
         let c = web3.utils.toBN(a.faceValue.toString()).add(web3.utils.toBN(b.faceValue.toString())).toString()
-            return {faceValue: c} 
-        })
-        return earnings.faceValue  
+        return { faceValue: c }
+    })
+    return earnings.faceValue
 }
 
 export async function getNodeStatus() {
