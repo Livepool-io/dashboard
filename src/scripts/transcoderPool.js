@@ -4,15 +4,27 @@ import { request } from 'graphql-request'
 
 import Web3 from "web3"
 let web3 = new Web3(process.env.VUE_APP_GETH_URL)
+let rawUris = JSON.parse(process.env.VUE_APP_LIVEPOOL_API)
+
+async function getData(urls) {
+    let data = []
+    for (const uri of urls){
+        await axios.get(uri).then(function(response) {
+            data.push(response.data)
+        }).catch(function(error) {
+            console.log(error)
+        });
+    }
+    return data
+}
 
 export async function getTranscoders() {
-    let urls = JSON.parse(process.env.VUE_APP_LIVEPOOL_API)
-    let regions
-
-    for (url in urls) {
-        regions.push(await axios.get(`${url}/transcoders`))
+    let uris = []
+    for (const url of rawUris) {
+        uris.push(url + `/transcoders`)
     }
-    regions = regions.map(r => r.data)
+    let regions = await getData(uris)
+
     regions = [].concat.apply([], regions)
     let transcoders = []
     regions.forEach(r => {
@@ -64,16 +76,18 @@ async function poolEarnings() {
 
 export async function getNodeStatus() {
     try {
-        let urls = JSON.parse(process.env.VUE_APP_LIVEPOOL_API)
-
-        let statusses = await Promise.all(urls.map(url => axios.get(`${url}/status`)))
-        statusses = [].concat(...statusses)
-        let totalPayouts = statusses.map(s => web3.utils.toBN(s.data.TotalPayouts.toString()))
+        let uris = []
+        for (const url of rawUris) {
+            uris.push(url + `/status`)
+        }
+        let statusses = await getData(uris)
+        
+        let totalPayouts = statusses.map(s => web3.utils.toBN(s.TotalPayouts.toString()))
         totalPayouts = totalPayouts.reduce((p, n) => p.add(n))
         let stats = {
-            lpVersion: statusses[0].data.Version,
-            commission: statusses[0].data.Commission,
-            basePrice: statusses[0].data.BasePrice,
+            lpVersion: statusses[0].Version,
+            commission: statusses[0].Commission,
+            basePrice: statusses[0].BasePrice,
             totalPayouts: web3.utils.fromWei(totalPayouts.toString(), 'ether')
         }
         return stats
